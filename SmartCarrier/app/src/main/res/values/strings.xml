@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">Carrier Guard</string>
+    <string name="title_home">Home</string>
+    <string name="title_my">My</string>
+    <string name="title_log">Log</string>
+    <string name="title_group">Group</string>
+
+
+    <string name="text_title">carrier</string>
+    <string name="text_detail">detail</string>
+    <string name="text_date">date</string>
+    <string name="text_time">time</string>
+    <string name="text_name">name</string>
+
+    <string name="menu_set">Set as default carrier</string>
+    <string name="menu_delete">Delete</string>
+
+    <!-- button -->
+    <string name="btn_register">register</string>
+    <string name="btn_login">login</string>
+    <string name="btn_logout">Logout</string>
+
+    <string name="btn_add">Add</string>
+    <string name="btn_delete">Delete</string>
+
+    <string name="btn_map">GPS</string>
+    <string name="btn_log_lock">Lock Log</string>
+    <string name="btn_log_route">Route Log</string>
+
+    <!-- hint -->
+    <string name="hint_id">ID</string>
+    <string name="hint_password">password</string>
+    <string name="hint_password_ck">password check</string>
+    <string name="hint_phone">phone no</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="account_header">Account Information</string>
+    <string name="notifications_header">Notifications</string>
+    <string name="carrier_header">Carrier Information</string>
+    <string name="setting_header">Carrier Settings</string>
+
+    <!-- Account Preferences -->
+    <string name="account_title">your Account</string>
+    <string name="email_title">Your Email</string>
+    <string name="phone_number_title">Your Phone number</string>
+
+    <!-- Notifications Preferences -->
+    <string name="open_title">Open and Close</string>
+    <string name="distance_title">Distance</string>
+    <string name="group_title">Group Invite</string>
+    <string name="notice_summary_on">Notice On</string>
+    <string name="notice_summary_off">Notice Off</string>
+
+    <!-- Carrier Preferences -->
+    <string name="manager_title">Manager Name</string>
+    <string name="mac_title">MAC Address</string>
+
+    <!-- Setting Preferences -->
+    <string name="smart_title">Smart Lock</string>
+    <string name="alarm_title">Alarm</string>
+    <string name="led_title">LED</string>
+    <string name="turn_summary_on">Turn On</string>
+    <string name="turn_summary_off">Turn Off</string>
+
+</resources>

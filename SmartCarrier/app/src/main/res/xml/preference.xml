@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/account_header">
+
+        <EditTextPreference
+            android:key="account"
+            android:title="@string/account_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            android:key="email"
+            android:title="@string/email_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            android:key="phone number"
+            android:title="@string/phone_number_title"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/notifications_header">
+
+        <SwitchPreferenceCompat
+            android:key="open and close"
+            android:summaryOff="@string/notice_summary_off"
+            android:summaryOn="@string/notice_summary_on"
+            android:title="@string/open_title" />
+
+        <SwitchPreferenceCompat
+            android:key="distance"
+            android:summaryOff="@string/notice_summary_off"
+            android:summaryOn="@string/notice_summary_on"
+            android:title="@string/distance_title" />
+
+        <SwitchPreferenceCompat
+            android:key="group"
+            android:summaryOff="@string/notice_summary_off"
+            android:summaryOn="@string/notice_summary_on"
+            android:title="@string/group_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
