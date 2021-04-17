@@ -46,28 +46,20 @@
             android:orientation="horizontal">
 
             <ToggleButton
-                android:layout_width="512dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:textOn="경보음 On"
                 android:textOff="경보음 Off"
-                android:textOn="경보음 On" />
+                android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/btn_lockOn"
+            <ToggleButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="잠금 ON" />
-            <Button
-                android:id="@+id/btn_lockOff"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="잠금 OFF" />
+                android:textOn="잠금 On"
+                android:textOff="잠금 Off"
+                android:layout_weight="1"/>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

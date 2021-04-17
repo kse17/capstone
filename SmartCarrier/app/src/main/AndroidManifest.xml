@@ -2,16 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elecom.smartcarrier">
 
-    //bluetooth
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
-    //bluetooth
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,9 +20,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".ui.settings.SettingsActivity"/>
         <activity android:name=".ui.group.GroupAddActivity"/>
-        <activity android:name=".ui.my.MyAddActivity"/>
-        <activity android:name=".ui.my.MySetActivity"/>
-        <activity android:name=".ui.home.HomeLockPassword"/>
 
     </application>
 
