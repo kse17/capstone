@@ -2,6 +2,7 @@ package com.elecom.smartcarrier.ui.my;
 
 import java.util.ArrayList;
 
+
 public class MyData {
     private String titleStr ;
     private String detailStr ;

@@ -20,6 +20,9 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".ui.settings.SettingsActivity"/>
         <activity android:name=".ui.group.GroupAddActivity"/>
+        <activity android:name=".ui.my.MyAddActivity"/>
+        <activity android:name=".ui.my.MySetActivity"/>
+        <activity android:name=".ui.home.HomeLockPassword"/>
 
     </application>
 

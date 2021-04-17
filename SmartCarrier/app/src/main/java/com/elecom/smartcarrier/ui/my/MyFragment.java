@@ -3,6 +3,7 @@ package com.elecom.smartcarrier.ui.my;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.elecom.smartcarrier.R;
+import com.elecom.smartcarrier.ui.group.GroupAddActivity;
 
 import java.util.ArrayList;
 
@@ -51,12 +53,12 @@ public class MyFragment extends Fragment {
         listView.setAdapter(myAdapter);
 
         // 컨텍스트 메뉴
-        //registerForContextMenu(listView);
+        registerForContextMenu(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(context, myAdapter.getItem(position).getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, myAdapter.getItem(position).getTitle(), Toast.LENGTH_LONG).show();
                 // 캐리어 개별 설정 페이지로 이동
             }
         });
@@ -65,11 +67,41 @@ public class MyFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                show();
+                Intent intent = new Intent(getActivity().getApplicationContext(), MyAddActivity.class);
+                startActivity(intent);
+                //show();
             }
         });
 
         return root;
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.context_my, menu);
+        // title, content 바꿔야됨
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.menu_set:
+                //Toast.makeText(context," ",Toast.LENGTH_SHORT).show();
+                //설정 페이지 필요한가??
+                Intent intent = new Intent(getActivity().getApplicationContext(), MySetActivity.class);
+                startActivity(intent);
+
+                return true;
+            case R.id.menu_delete:
+                show();
+                //삭제
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     void show()

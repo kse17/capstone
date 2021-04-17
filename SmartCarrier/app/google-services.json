@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "758269352954",
+    "firebase_url": "https://smartcarrier-99277-default-rtdb.firebaseio.com",
+    "project_id": "smartcarrier-99277",
+    "storage_bucket": "smartcarrier-99277.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758269352954:android:0ee32eb7178e3d82de6243",
+        "android_client_info": {
+          "package_name": "com.elecom.smartcarrier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758269352954-imf1jugo20i4ksrvr5hdafrangvhu1os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT783nycWdZ27AiQDoWorx5rAAcH7nch0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758269352954-imf1jugo20i4ksrvr5hdafrangvhu1os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
