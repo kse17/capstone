@@ -16,8 +16,6 @@ import com.elecom.smartcarrier.R;
 import com.elecom.smartcarrier.ui.group.GroupAddActivity;
 import com.elecom.smartcarrier.ui.group.GroupFragment;
 import com.elecom.smartcarrier.ui.my.MyAddActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeLockPassword extends AppCompatActivity {
     ToggleButton btn_lock;
@@ -28,15 +26,8 @@ public class HomeLockPassword extends AppCompatActivity {
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_lock_password);
-        Button btn_lockOn = (Button)findViewById(R.id.btn_lockOn);
-        Button btn_lockOff = (Button)findViewById(R.id.btn_lockOff);
+        ToggleButton btn_lock = (ToggleButton)findViewById(R.id.btn_lock);
         Button btn_ok = (Button)findViewById(R.id.btn_ok);
-
-        //in it firebase
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //database의 Carrier라는 인스턴스 갖기
-        final DatabaseReference table_carrier = database.getReference("Carrier");
-
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,10 +45,10 @@ public class HomeLockPassword extends AppCompatActivity {
         return true;
     }
 
-    //@Override
-    //public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         //안드로이드 백버튼 막기
-    //    return;
-    //}
+        return;
+    }
 
 }

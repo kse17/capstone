@@ -54,42 +54,51 @@ public class SignUpActivity extends AppCompatActivity {
                  mDialog.setMessage("Please Waiting");
                  mDialog.show();
 
-                 table_user.addValueEventListener(new ValueEventListener() {
+                 String LenID = et_id.getText().toString();
+                 String LenPassword = et_password.getText().toString();
+                 String LenPasswordCK = et_password_ck.getText().toString();
+                 String LenPhone = et_phone.getText().toString();
 
-                     @Override
-                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                         //이미 등록된 아이디일 경우
-                         if(dataSnapshot.child(et_id.getText().toString()).exists())
-                         {
-                             mDialog.dismiss();
-                             Toast.makeText(SignUpActivity.this,"This id is already registered",Toast.LENGTH_LONG).show();
-                         }
-                         //회원 정보 db 저장
-                         else
-                         {
-                             if((et_password.getText().toString()).equals(et_password_ck.getText().toString()))
-                             {
-                                 mDialog.dismiss();
-                                 //userDTO 입력한 정보 저장
-                                 UserDTO user = new UserDTO(et_id.getText().toString(), et_password.getText().toString(),et_phone.getText().toString());
-                                 //db에 유저 정보 저장
-                                 table_user.child(et_id.getText().toString()).setValue(user);
-                                 Toast.makeText(SignUpActivity.this,"Sign up is complete",Toast.LENGTH_SHORT).show();
-                                 finish();
-                             }
-                             //비밀번호와 비밀번호 확인이 일치하지않는 경우
-                             else
-                             {
-                                 mDialog.dismiss();
-                                 Toast.makeText(SignUpActivity.this,"Passwords do not match",Toast.LENGTH_LONG).show();
-                             }
-                         }
-                     }
+                 //공백칸이 존재하는데 register 버튼을 클릭했을 때
+                 if (LenID.getBytes().length <= 0 || LenPassword.getBytes().length <= 0 || LenPasswordCK.getBytes().length <= 0 || LenPhone.getBytes().length <=0)
+                 {
+                     mDialog.dismiss();
+                     Toast.makeText(SignUpActivity.this,"빈 칸을 입력하세요",Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     table_user.addValueEventListener(new ValueEventListener() {
 
-                     @Override
-                     public void onCancelled(@NonNull DatabaseError error) {
-                     }
-                 });
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             //이미 등록된 아이디일 경우
+                             if (dataSnapshot.child(et_id.getText().toString()).exists()) {
+                                 mDialog.dismiss();
+                                 Toast.makeText(SignUpActivity.this, "This id is already registered", Toast.LENGTH_SHORT).show();
+                             }
+                             //회원 정보 db 저장
+                             else {
+                                 if ((et_password.getText().toString()).equals(et_password_ck.getText().toString())) {
+                                     mDialog.dismiss();
+                                     //userDTO 입력한 정보 저장
+                                     UserDTO user = new UserDTO(et_id.getText().toString(), et_password.getText().toString(), et_phone.getText().toString());
+                                     //db에 유저 정보 저장
+                                     table_user.child(et_id.getText().toString()).setValue(user);
+                                     Toast.makeText(SignUpActivity.this, "Sign up is complete", Toast.LENGTH_SHORT).show();
+                                     finish();
+                                 }
+                                 //비밀번호와 비밀번호 확인이 일치하지않는 경우
+                                 else {
+                                     mDialog.dismiss();
+                                     Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                                 }
+                             }
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError error) {
+                         }
+                     });
+                 }
             }
         });
     }

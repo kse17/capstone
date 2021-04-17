@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_map" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_open"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="개폐상태 (열려있음)"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/text_lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="잠금상태 (열려있음)"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textOn="경보음 On"
+                android:textOff="경보음 Off"
+                android:layout_weight="1"/>
+
+            <ToggleButton
+                android:id="@+id/btn_lock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textOn="잠금 On"
+                android:textOff="잠금 Off"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
