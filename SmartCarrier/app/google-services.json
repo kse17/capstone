@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "568751095343",
+    "project_id": "smart-carrier-3cbba",
+    "storage_bucket": "smart-carrier-3cbba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568751095343:android:41196cf0ffefb3d4eed0da",
+        "android_client_info": {
+          "package_name": "com.elecom.smartcarrier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568751095343-uuban4cujl86eeqbdt2s3esorn8nb827.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elecom.smartcarrier",
+            "certificate_hash": "9a171a3b74b8f0a79b06580a9bbd1670cfa24f20"
+          }
+        },
+        {
+          "client_id": "568751095343-jd8rtbkmrod8afgde4ech0rbk7ci39ia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZiOhs9fF1DnzXQCXfVUodXq_v1J9zkRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568751095343-jd8rtbkmrod8afgde4ech0rbk7ci39ia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

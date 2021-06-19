@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/carrier_header">
+
+        <EditTextPreference
+            android:key="manager"
+            android:title="@string/manager_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            android:key="mac"
+            android:title="@string/mac_title"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_header">
+
+        <SwitchPreferenceCompat
+            android:key="lock"
+            android:summaryOff="@string/turn_summary_off"
+            android:summaryOn="@string/turn_summary_on"
+            android:title="@string/smart_title" />
+
+        <SwitchPreferenceCompat
+            android:key="buzzer"
+            android:summaryOff="@string/turn_summary_off"
+            android:summaryOn="@string/turn_summary_on"
+            android:title="@string/alarm_title" />
+
+        <SwitchPreferenceCompat
+            android:key="led"
+            android:summaryOff="@string/turn_summary_off"
+            android:summaryOn="@string/turn_summary_on"
+            android:title="@string/led_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
