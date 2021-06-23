@@ -80,17 +80,17 @@
                 android:textOn="경보음 On" />
 
             <Button
-                android:id="@+id/btn_lockOn"
+                android:id="@+id/btn_lock_open"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="잠금 ON" />
+                android:text="OPEN" />
             <Button
-                android:id="@+id/btn_lockOff"
+                android:id="@+id/btn_lock_close"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="잠금 OFF" />
+                android:text="CLOSE" />
 
         </LinearLayout>
 

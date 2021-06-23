@@ -20,8 +20,8 @@ public class HomeLockPassword extends AppCompatActivity {
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_lock_password);
-        Button btn_lockOn = (Button)findViewById(R.id.btn_lockOn);
-        Button btn_lockOff = (Button)findViewById(R.id.btn_lockOff);
+        Button btnOpen = (Button)findViewById(R.id.btn_lock_open);
+        Button btnClose = (Button)findViewById(R.id.btn_lock_close);
         Button btn_ok = (Button)findViewById(R.id.btn_ok);
 
         btn_ok.setOnClickListener(new View.OnClickListener() {

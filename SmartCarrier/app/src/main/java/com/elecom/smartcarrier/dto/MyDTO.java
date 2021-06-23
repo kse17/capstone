@@ -1,4 +1,4 @@
-package com.elecom.smartcarrier.main.ui.my;
+package com.elecom.smartcarrier.dto;
 
 import com.google.firebase.database.Exclude;
 

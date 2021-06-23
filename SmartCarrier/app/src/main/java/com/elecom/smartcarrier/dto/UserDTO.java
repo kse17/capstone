@@ -1,19 +1,19 @@
-package com.elecom.smartcarrier.main;
+package com.elecom.smartcarrier.dto;
 
 // Database에 저장하기 위한 UserDTO
 public class UserDTO {
 
     public String email;
-    public String name;
+    public String uname;
 
     public UserDTO() {
         super();
     }
 
-    public UserDTO(String email, String name) {
+    public UserDTO(String email, String uname) {
         super();
         this.email = email;
-        this.name = name;
+        this.uname = uname;
     }
 
     public String getEmail() {
@@ -23,15 +23,15 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getName() {
-        return this.name ;
+    public String getUname() {
+        return this.uname ;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     @Override
     public String toString() {
-        return "User [email = " + email + ", name = " + name + "]";
+        return "User [email = " + email + ", user name = " + uname + "]";
     }
 }

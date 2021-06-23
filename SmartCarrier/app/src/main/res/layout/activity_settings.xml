@@ -27,21 +27,21 @@
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
-            android:id="@+id/user_email"
+            android:id="@+id/email_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            android:text="N/A"
+            android:text="@string/email_title"
             app:layout_constraintTop_toBottomOf="@+id/account_header"
             app:layout_constraintBottom_toTopOf="@+id/user_display_name"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
-            android:id="@+id/user_display_name"
+            android:id="@+id/uname_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            android:text="N/A"
+            android:text="@string/uname_title"
             app:layout_constraintTop_toBottomOf="@+id/user_email"
             app:layout_constraintLeft_toLeftOf="parent" />
 

@@ -14,42 +14,63 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.elecom.smartcarrier.R;
+import com.elecom.smartcarrier.common.DefineValue;
+import com.elecom.smartcarrier.common.PreferenceManager;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment {
 
-    private Context context;
-    private HomeViewModel homeViewModel;
-    public HomeFragment(){
+    final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    final DatabaseReference table_carrier = firebaseDatabase.getReference("carriers");
 
-    }
-    ToggleButton btn_lock;
+    private Context context;
+
+    private Button btnOpen;
+    private Button btnClose;
+    //ToggleButton btn_lock;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button btn_lockOn = (Button)root.findViewById(R.id.btn_lockOn);
-        Button btn_lockOff = (Button)root.findViewById(R.id.btn_lockOff);
-
-        //잠금 on 클릭 시 비밀번호 입력 창 열기
-        btn_lockOn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getActivity().getApplicationContext(), HomeLockPassword.class);
-                startActivity(intent);
-            }
-        });
-        //잠금 off 클릭 시 비밀번호 입력 창 열기
-        btn_lockOff.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getActivity().getApplicationContext(), HomeLockPassword.class);
-                startActivity(intent);
-            }
-        });
+        btnOpen = (Button)root.findViewById(R.id.btn_lock_open);
+        btnClose = (Button)root.findViewById(R.id.btn_lock_close);
 
         init();
+
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // OPEN 클릭 시 비밀번호 입력 창 열기
+        btnOpen.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                // 테스트를 위해 바로 열리도록 수정
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), DefineValue.PREFERENCE_DEFAULT_CARRIER, "default")).child("lock").setValue("1");
+
+                //Intent intent = new Intent(getActivity().getApplicationContext(), HomeLockPassword.class);
+                //startActivity(intent);
+            }
+        });
+
+        // CLOSE 클릭 시 비밀번호 입력 창 열기
+        btnClose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                // 테스트를 위해 바로 닫히도록 수정
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), DefineValue.PREFERENCE_DEFAULT_CARRIER, "default")).child("lock").setValue("0");
+
+                //Intent intent = new Intent(getActivity().getApplicationContext(), HomeLockPassword.class);
+                //startActivity(intent);
+            }
+        });
+
     }
 
     private void init() {

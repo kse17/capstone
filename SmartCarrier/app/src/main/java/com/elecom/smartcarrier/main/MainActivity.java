@@ -1,6 +1,5 @@
 package com.elecom.smartcarrier.main;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,9 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.elecom.smartcarrier.R;
 import com.elecom.smartcarrier.common.ActivityHandler;
 import com.elecom.smartcarrier.common.DefineValue;
+import com.elecom.smartcarrier.dto.UserDTO;
 import com.elecom.smartcarrier.init.InitStepHandler;
 import com.elecom.smartcarrier.init.PermissionActivity;
 import com.elecom.smartcarrier.server.analytics.AnalyticsHelper;
@@ -35,14 +33,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -106,11 +102,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Successfully signed in.");
                     Toast.makeText(this,"Successfully signed in.",Toast.LENGTH_SHORT).show();
                     user = FirebaseAuth.getInstance().getCurrentUser();
-                    signUp();
+                    //signUp();
+                    writeNewUser(user);
                 } else {
                     // Sign in failed.
                     Log.d(TAG, "Sign in failed. " + response.getError().getErrorCode());
-                    Toast.makeText(this,"Sign in failed.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Sign in failed.",Toast.LENGTH_SHORT).show();
                 }
             default:
                 break;
@@ -124,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
@@ -240,27 +238,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
-                    // 이미 등록된 아이디일 경우
-                    mDialog.dismiss();
-                    Toast.makeText(MainActivity.this,"This id(" + user.getUid() +") is already registered",Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Error getting data", task.getException());
                 } else {
+                    Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                }
+
+                if (task.getResult().getValue() == null) {
                     // 회원 정보 db 저장
                     mDialog.dismiss();
-                    Toast.makeText(MainActivity.this,user.getUid() + " go go~",Toast.LENGTH_LONG).show();
-                    writeUserData(user);
+                    Toast.makeText(getApplicationContext(),user.getUid() + " go go~",Toast.LENGTH_SHORT).show();
+                    writeNewUser(user);
                     // 액티비티 종료
                     //finish();
+                } else {
+                    // 이미 등록된 아이디일 경우
+                    mDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"This id(" + user.getUid() +") is already registered",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void writeUserData(FirebaseUser user){
+    private void writeNewUser(FirebaseUser user){
         // UserDTO 입력한 정보 저장
-        UserDTO userDTO = new UserDTO(this.user.getEmail(), this.user.getDisplayName());
+        UserDTO userDTO = new UserDTO(user.getEmail(), user.getDisplayName());
 
         // DB에 유저 정보 저장
-        table_user.child(this.user.getUid()).setValue(userDTO);
+        table_user.child(user.getUid()).setValue(userDTO);
         Toast.makeText(this,"Sign up is complete",Toast.LENGTH_SHORT).show();
     }
 

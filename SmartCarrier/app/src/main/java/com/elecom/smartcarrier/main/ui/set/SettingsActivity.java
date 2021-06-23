@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (user != null) {
             // 인증이 되어 있는 상태
             setContentView(R.layout.activity_settings);
-            populateProfile();
+            populateAccount();
             //populateIdpToken();
 
             //updateMainView();
@@ -80,15 +80,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    private void populateProfile() {
+    private void populateAccount() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        TextView emailtxt = (TextView)findViewById(R.id.user_email);
-        emailtxt.setText(
+        TextView txtEmail = (TextView)findViewById(R.id.email_title);
+        txtEmail.setText(
                 TextUtils.isEmpty(user.getEmail()) ? "No email" : user.getEmail());
 
-        TextView usernametxt = (TextView)findViewById(R.id.user_display_name);
-        usernametxt.setText(
+        TextView txtUname = (TextView)findViewById(R.id.uname_title);
+        txtUname.setText(
                 TextUtils.isEmpty(user.getDisplayName()) ? "No display name" : user.getDisplayName());
     }
 }

@@ -1,6 +1,7 @@
 package com.elecom.smartcarrier.main.ui.my;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -17,9 +18,19 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.elecom.smartcarrier.R;
+import com.elecom.smartcarrier.dto.CarrierDTO;
+import com.elecom.smartcarrier.dto.MyDTO;
+import com.elecom.smartcarrier.dto.UserDTO;
+import com.elecom.smartcarrier.main.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,18 +41,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.elecom.smartcarrier.common.DefineValue.REQ_BLUETOOTH;
+
 public class ConnectedList extends AppCompatActivity {
 
     private static final String TAG = "ConnectedList";
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    final DatabaseReference table_user = firebaseDatabase.getReference("users");
     final DatabaseReference table_carrier = firebaseDatabase.getReference("carriers");
 
     //BluetoothAdapter
     private BluetoothAdapter mBluetoothAdapter;
 
-    //블루투스 요청 액티비티 코드
-    final static int BLUETOOTH_REQUEST_CODE = 100;
+    FirebaseUser user;
 
     //UI
     Button btnSearch;
@@ -62,13 +75,14 @@ public class ConnectedList extends AppCompatActivity {
     int selectDevice;
 
     private Context context;
-    String manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected_list);
         context = this;
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         //UI
         chkFindme = findViewById(R.id.chkFindme);
@@ -79,12 +93,12 @@ public class ConnectedList extends AppCompatActivity {
 
         //Adapter1
         dataPaired = new ArrayList<>();
-        adapterPaired = new SimpleAdapter(this, dataPaired, android.R.layout.simple_list_item_2, new String[]{"name", "address"}, new int[]{android.R.id.text1, android.R.id.text2});
+        adapterPaired = new SimpleAdapter(this, dataPaired, android.R.layout.simple_list_item_2, new String[]{"cname", "mac"}, new int[]{android.R.id.text1, android.R.id.text2});
 //        //페어링된 리스트 주석처리 ***
 //        listPaired.setAdapter(adapterPaired);
         //Adapter2
         dataDevice = new ArrayList<>();
-        adapterDevice = new SimpleAdapter(this, dataDevice, android.R.layout.simple_list_item_2, new String[]{"name", "address"}, new int[]{android.R.id.text1, android.R.id.text2});
+        adapterDevice = new SimpleAdapter(this, dataDevice, android.R.layout.simple_list_item_2, new String[]{"cname", "mac"}, new int[]{android.R.id.text1, android.R.id.text2});
         listDevice.setAdapter(adapterDevice);
 
         //검색된 블루투스 디바이스 데이터
@@ -118,7 +132,7 @@ public class ConnectedList extends AppCompatActivity {
         //2. 블루투스가 꺼져있으면 사용자에게 활성화 요청하기
         if (!mBluetoothAdapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(intent, BLUETOOTH_REQUEST_CODE);
+            startActivityForResult(intent, REQ_BLUETOOTH);
         } else {
             GetListPairedDevice();
         }
@@ -133,9 +147,13 @@ public class ConnectedList extends AppCompatActivity {
                     Method method = device.getClass().getMethod("createBond", (Class[]) null);
                     method.invoke(device, (Object[]) null);
                     selectDevice = position;
+
+                    registerCarrier(device);
                     //manager = PreferenceManager.getStringPreference(context, "id");
                     //PreferenceManager.setString(context, "mac", device.getAddress());
-                    //writeNewCarrier(device.getAddress(), device.getName(), manager, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+                    //writeNewCarrier(user, device);
+
+                    //writeNewCarrier(device.getAddress(), device.getName(), user.getEmail(), Boolean.FALSE, Boolean.FALSE, Boolean.FALSE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -195,8 +213,8 @@ public class ConnectedList extends AppCompatActivity {
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     Log.i("data", "확인");
                     Map map = new HashMap();
-                    map.put("name", device.getName()); //device.getName() : 블루투스 디바이스의 이름
-                    map.put("address", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
+                    map.put("cname", device.getName()); //device.getName() : 블루투스 디바이스의 이름
+                    map.put("mac", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
                     dataDevice.add(map);
                     bluetoothDevices.add(device);
                 }
@@ -256,8 +274,8 @@ public class ConnectedList extends AppCompatActivity {
             for (BluetoothDevice device : pairedDevice) {
                 //데이터 저장
                 Map map = new HashMap();
-                map.put("name", device.getName()); //device.getName() : 블루투스 디바이스의 이름
-                map.put("address", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
+                map.put("cname", device.getName()); //device.getName() : 블루투스 디바이스의 이름
+                map.put("mac", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
                 dataPaired.add(map);
                 pairedDevices.add(device);
             }
@@ -270,7 +288,7 @@ public class ConnectedList extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case BLUETOOTH_REQUEST_CODE:
+            case REQ_BLUETOOTH:
                 //블루투스 활성화 승인
                 if (resultCode == Activity.RESULT_OK) {
                     GetListPairedDevice();
@@ -285,15 +303,57 @@ public class ConnectedList extends AppCompatActivity {
         }
     }
 
-    private void writeNewCarrier(String mac, String name, String manager, Boolean lock, Boolean buzzer, Boolean led){
+    // 정보 확인 후 firebase에 데이터 저장
+    public void registerCarrier(BluetoothDevice device) {
+        Log.d(TAG, "register");
 
-        // MyDTO 입력한 정보 저장
-        MyDTO my = new MyDTO(name, manager, lock, buzzer, led);
+        //showProgressDialog();
+        final ProgressDialog mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Please Wait");
+        mDialog.show();
+
+        table_carrier.child(device.getAddress()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    //Log.e(TAG, "Error getting data", task.getException());
+                } else {
+                    Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                }
+
+                if (task.getResult().getValue() == null) {
+                    // 캐리어 정보 db 저장
+                    mDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),device.getAddress() + " go go~",Toast.LENGTH_SHORT).show();
+                    writeNewCarrier(user, device);
+                    // 액티비티 종료
+                    //finish();
+                } else {
+                    // 이미 등록된 맥주소일 경우
+                    mDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"This mac(" + device.getAddress() +") is already registered",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void writeNewCarrier(FirebaseUser user, BluetoothDevice device){
+        // CarrierDTO 입력한 정보 저장
+        CarrierDTO carrierDTO = new CarrierDTO(device.getAddress(), device.getName(), user.getUid(), "0", "1", "1", "1", "0", "default");
+
+        // DB에 캐리어 정보 저장
+        table_carrier.child(device.getAddress()).setValue(carrierDTO);
+        Toast.makeText(getApplicationContext(),"Carrier registration is complete: " + carrierDTO.toString(),Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void writeUserData(FirebaseUser user){
+        // UserDTO 입력한 정보 저장
+        UserDTO userDTO = new UserDTO(user.getEmail(), user.getDisplayName());
 
         // DB에 유저 정보 저장
-        table_carrier.child(mac).setValue(my);
-        Toast.makeText(ConnectedList.this,"Carrier registration is complete",Toast.LENGTH_SHORT).show();
-
+        table_user.child(user.getUid()).setValue(userDTO);
+        Toast.makeText(this,"Sign up is complete",Toast.LENGTH_SHORT).show();
     }
 
 }
