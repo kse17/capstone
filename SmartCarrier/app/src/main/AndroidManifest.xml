@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.elecom.smartcarrier">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -8,18 +20,35 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmartCarrier">
-        <activity android:name=".SignInActivity">
+        android:theme="@style/Theme.SmartCarrier"
+        android:requestLegacyExternalStorage="true" >
+
+        <activity android:name=".init.PermissionActivity" />
+        <activity android:name=".init.GuideActivity" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ui.settings.SettingsActivity"/>
-        <activity android:name=".ui.group.GroupAddActivity"/>
+        <activity android:name=".main.ui.set.SettingsActivity" />
+        <activity android:name=".main.ui.my.ConnectedList" />
+        <activity android:name=".main.ui.my.MySetActivity"/>
+        <activity android:name=".main.ui.my.finger.FindFPActivity"/>
+        <activity android:name=".main.ui.my.finger.DeleteFPActivity"/>
+        <activity android:name=".main.ui.my.finger.AddFPActivity"/>
+        <activity android:name=".main.ui.home.MapActivity"/>
+
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDrpG3ExnbwWtLvp121wtP-pH3dc6dvPHg">
+        </meta-data>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

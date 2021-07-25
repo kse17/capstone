@@ -4,6 +4,10 @@
     <string name="title_my">My</string>
     <string name="title_log">Log</string>
     <string name="title_group">Group</string>
+    <string name="app_description1">다중 사용자를 위한 스마트 캐리어와 어플리케이션</string>
+    <string name="app_description2">Smart Carrier and Applications for Multiple Users</string>
+
+    <string name="limit">권한 거절로 인해 일부기능이 제한됩니다.</string>
 
 
     <string name="text_title">carrier</string>
@@ -11,14 +15,19 @@
     <string name="text_date">date</string>
     <string name="text_time">time</string>
     <string name="text_name">name</string>
+    <string name="text_finger">"지문인식기에 등록할 손가락을 대주세요"</string>
 
-    <string name="menu_set">Set as default carrier</string>
+    <string name="menu_default">Set as default carrier</string>
+    <string name="menu_set">Carrier set</string>
     <string name="menu_delete">Delete</string>
 
     <!-- button -->
+    <string name="btn_start">start</string>
     <string name="btn_register">register</string>
     <string name="btn_login">login</string>
-    <string name="btn_logout">Logout</string>
+    <string name="btn_login_firebase">email register</string>
+    <string name="btn_sign_out">SignOut</string>
+    <string name="btn_delete_user">Delete User</string>
 
     <string name="btn_add">Add</string>
     <string name="btn_delete">Delete</string>
@@ -27,13 +36,26 @@
     <string name="btn_log_lock">Lock Log</string>
     <string name="btn_log_route">Route Log</string>
 
+    <string name="btn_add_finger">Add Fingerprint</string>
+    <string name="btn_find_finger">Find Fingerprint</string>
+    <string name="btn_delete_finger">Delete Fingerprint</string>
+
     <!-- hint -->
     <string name="hint_id">ID</string>
     <string name="hint_password">password</string>
     <string name="hint_password_ck">password check</string>
-    <string name="hint_phone">phone no</string>
+    <string name="hint_name">name</string>
+    <string name="hint_email">email</string>
+    <string name="hint_phone">phone</string>
 
+    <!-- action -->
+    <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_sign_out">Sign Out</string>
+    <string name="action_delete_account">Delete Account</string>
+    <string name="action_clear_data">Clear Data</string>
+    <string name="action_check">Check</string>
 
     <!-- Preference Titles -->
     <string name="account_header">Account Information</string>
@@ -44,7 +66,7 @@
     <!-- Account Preferences -->
     <string name="account_title">your Account</string>
     <string name="email_title">Your Email</string>
-    <string name="phone_number_title">Your Phone number</string>
+    <string name="uname_title">Your Name</string>
 
     <!-- Notifications Preferences -->
     <string name="open_title">Open and Close</string>
@@ -58,10 +80,20 @@
     <string name="mac_title">MAC Address</string>
 
     <!-- Setting Preferences -->
-    <string name="smart_title">Smart Lock</string>
-    <string name="alarm_title">Alarm</string>
+    <string name="lock_title">Smart Lock</string>
+    <string name="buzzer_title">Buzzer</string>
     <string name="led_title">LED</string>
     <string name="turn_summary_on">Turn On</string>
     <string name="turn_summary_off">Turn Off</string>
 
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="default_notification_channel_id">Channel ID</string>
+    <string name="default_notification_channel_name" translatable="true">Test</string>
+
+
+    <string name="state_opened">개폐상태 (열려있음)</string>
+    <string name="state_closed">걔폐상태 (닫혀있음)</string>
+
+    <string name="lock_opened">잠금상태 (열려있음)</string>
+    <string name="lock_closed">잠금상태 (닫혀있음)</string>
 </resources>

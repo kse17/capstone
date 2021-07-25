@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/text_find_finger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/fui_button_inset_left"
+        android:text="@string/text_finger"
+        android:layout_marginBottom="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold">
+    </TextView>
+
+    <TextView
+        android:id="@+id/text_fp_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/fui_button_inset_left"
+        android:text="text_fp_location"
+        android:layout_marginBottom="20dp"
+        android:textSize="15dp"
+        android:textStyle="bold">
+    </TextView>
+
+    <TextView
+        android:id="@+id/text_fp_confidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/fui_button_inset_left"
+        android:text="text_fp_confidence"
+        android:layout_marginBottom="20dp"
+        android:textSize="15dp"
+        android:textStyle="bold">
+    </TextView>
+
+
+</LinearLayout>

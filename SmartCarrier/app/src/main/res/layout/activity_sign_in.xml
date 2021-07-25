@@ -37,7 +37,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/btn_login"
             android:textColor="@color/white"
-            android:onClick="onLogin"/>
+            android:onClick="onClick"/>
 
         <Button
             android:id="@+id/btn_register"
@@ -46,7 +46,16 @@
             android:layout_marginTop="20dp"
             android:text="@string/btn_register"
             android:textColor="@color/white"
-            android:onClick="onRegister"/>
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/btn_login_firebase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_login_firebase"
+            android:textColor="@color/white"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 

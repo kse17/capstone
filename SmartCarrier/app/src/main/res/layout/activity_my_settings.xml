@@ -1,18 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".main.ui.my.MySetActivity"
+    tools:showIn="@layout/activity_my_settings">
 
-    <FrameLayout
-        android:id="@+id/settings_my"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/carrier_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
 
-    <Button
-        android:id="@+id/btn_delete"
+        <TextView
+            android:id="@+id/carrier_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:text="@string/carrier_header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/manager_title"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/manager_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:text="N/A"
+            app:layout_constraintTop_toBottomOf="@+id/carrier_header"
+            app:layout_constraintBottom_toTopOf="@+id/mac_title"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/mac_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:text="N/A"
+            app:layout_constraintTop_toBottomOf="@+id/manager_title"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_delete" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/carrier_layout"
+        app:layout_constraintLeft_toLeftOf="parent">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/setting_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:text="@string/setting_header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Switch
+            android:id="@+id/lock_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lock_title"
+            app:layout_constraintTop_toBottomOf="@+id/setting_header"
+            app:layout_constraintBottom_toTopOf="@+id/buzzer_title"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Switch
+            android:id="@+id/buzzer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buzzer_title"
+            app:layout_constraintTop_toBottomOf="@+id/lock_title"
+            app:layout_constraintBottom_toTopOf="@+id/led_title"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Switch
+            android:id="@+id/led_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/led_title"
+            app:layout_constraintTop_toBottomOf="@+id/buzzer_title"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/setting_layout"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <Button
+            android:id="@+id/btn_add_finger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_add_finger"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_find_finger"
+            app:layout_constraintLeft_toLeftOf="parent" />
+        <Button
+            android:id="@+id/btn_find_finger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_find_finger"
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_finger"
+            app:layout_constraintBottom_toTopOf="@+id/btn_delete_finger"
+            app:layout_constraintLeft_toLeftOf="parent" />
+        <Button
+            android:id="@+id/btn_delete_finger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_delete_finger"
+            app:layout_constraintTop_toBottomOf="@+id/btn_find_finger"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

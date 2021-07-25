@@ -19,24 +19,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:text="추가하고자하는 사용자의 핸드폰 번호를 입력하세요.">
+            android:text="추가하고자하는 사용자의 이메일을 입력하세요.">
         </TextView>
 
         <EditText
-            android:id="@+id/et_phone"
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/hint_phone"
+            android:hint="@string/hint_email"
             android:padding="10dp"/>
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_add_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:text="@string/btn_add"
-            android:onClick="onAdd"/>
+            android:text="@string/btn_add"/>
 
     </LinearLayout>
 

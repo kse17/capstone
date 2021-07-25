@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".main.ui.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,19 +24,46 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/text_open"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="개폐상태 (열려있음)"
-                android:layout_weight="1"/>
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/text_lock"
-                android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/img_state"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_carrier_green" />
+
+                <TextView
+                    android:id="@+id/text_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/state_closed" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="잠금상태 (열려있음)"
-                android:layout_weight="1"/>
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/img_lock"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_outline_lock_24" />
+
+                <TextView
+                    android:id="@+id/text_lock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/lock_closed" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -45,21 +72,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ToggleButton
+            <Button
+                android:id="@+id/btn_buzzer_on"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textOn="경보음 On"
-                android:textOff="경보음 Off"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="Buzzer ON" />
+            <Button
+                android:id="@+id/btn_buzzer_off"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Buzzer OFF" />
 
-            <ToggleButton
+            <Button
+                android:id="@+id/btn_lock_open"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textOn="잠금 On"
-                android:textOff="잠금 Off"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="OPEN" />
+            <Button
+                android:id="@+id/btn_lock_close"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="CLOSE" />
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 
