@@ -3,6 +3,7 @@ package com.elecom.smartcarrier.main.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +17,30 @@ import androidx.fragment.app.Fragment;
 import com.elecom.smartcarrier.R;
 import com.elecom.smartcarrier.common.PreferenceManager;
 import com.elecom.smartcarrier.dto.CarrierControlDTO;
+import com.elecom.smartcarrier.dto.CarrierLogDTO;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.elecom.smartcarrier.common.DefineValue.PREFERENCE_DEFAULT_CARRIER;
+import static com.elecom.smartcarrier.common.DefineValue.PREFERENCE_DEFAULT_USER;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
+
+    FirebaseUser user;
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final DatabaseReference table_carrier = firebaseDatabase.getReference("carriers");
@@ -49,7 +63,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         btnMap = (Button)root.findViewById(R.id.btn_map);
@@ -67,7 +81,7 @@ public class HomeFragment extends Fragment {
         txtLock = (TextView)root.findViewById(R.id.text_lock);
 
 
-        table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default"))
+        table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
                 .child("carrierControl").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,6 +126,8 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         // GPS 클릭
         btnMap.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -125,7 +141,7 @@ public class HomeFragment extends Fragment {
         btnOn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default"))
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
                         .child("carrierControl").child("buzzer").setValue("1");
             }
         });
@@ -134,7 +150,7 @@ public class HomeFragment extends Fragment {
         btnOff.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default"))
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
                         .child("carrierControl").child("buzzer").setValue("0");
             }
         });
@@ -143,8 +159,12 @@ public class HomeFragment extends Fragment {
         btnOpen.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default"))
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
                         .child("carrierControl").child("lock").setValue("1");
+
+                CarrierLogDTO logDTO = new CarrierLogDTO(getTime(), user.getDisplayName(), user.getEmail(), "1");
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
+                        .child("carrierLog").push().setValue(logDTO);
             }
         });
 
@@ -152,12 +172,24 @@ public class HomeFragment extends Fragment {
         btnClose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default"))
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
                         .child("carrierControl").child("lock").setValue("0");
+
+                CarrierLogDTO logDTO = new CarrierLogDTO(getTime(), user.getDisplayName(), user.getEmail(), "0");
+                table_carrier.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_CARRIER, "default_carrier"))
+                        .child("carrierLog").push().setValue(logDTO);
             }
         });
-
-
-
     }
+
+    private String getTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = dateFormat.format(date);
+
+        return getTime;
+    }
+
 }

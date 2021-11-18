@@ -10,15 +10,24 @@ public class UserDTO {
 
     public String email;
     public String uname;
+    public String uid;
 
     public UserDTO() {
         super();
     }
 
-    public UserDTO(String email, String uname) {
+    public UserDTO(String uid, String email, String uname) {
         super();
+        this.uid = uid;
         this.email = email;
         this.uname = uname;
+    }
+
+    public String getUid() {
+        return this.uid ;
+    }
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getEmail() {
@@ -39,6 +48,7 @@ public class UserDTO {
     public Map<String, Object> toMap() {
         HashMap<String, Object> users = new HashMap<>();
 
+        users.put("uid", uid);
         users.put("email", email);
         users.put("uname", uname);
 
@@ -47,6 +57,6 @@ public class UserDTO {
     
     @Override
     public String toString() {
-        return "User [email = " + email + ", user name = " + uname + "]";
+        return "User [uid = " + uid + ", email = " + email + ", user name = " + uname + "]";
     }
 }

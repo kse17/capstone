@@ -17,4 +17,16 @@
         android:label="@string/title_my"
         tools:layout="@layout/fragment_my" />
 
+    <fragment
+        android:id="@+id/nav_group"
+        android:name="com.elecom.smartcarrier.main.ui.group.GroupFragment"
+        android:label="@string/title_group"
+        tools:layout="@layout/fragment_group" />
+
+    <fragment
+        android:id="@+id/nav_log"
+        android:name="com.elecom.smartcarrier.main.ui.log.LogFragment"
+        android:label="@string/title_log"
+        tools:layout="@layout/fragment_log" />
+
 </navigation>

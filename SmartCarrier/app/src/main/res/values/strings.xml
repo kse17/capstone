@@ -13,8 +13,9 @@
     <string name="text_title">carrier</string>
     <string name="text_detail">detail</string>
     <string name="text_date">date</string>
-    <string name="text_time">time</string>
     <string name="text_name">name</string>
+    <string name="text_email">email</string>
+    <string name="text_lock_log">lock log</string>
     <string name="text_finger">"지문인식기에 등록할 손가락을 대주세요"</string>
 
     <string name="menu_default">Set as default carrier</string>
@@ -90,10 +91,11 @@
     <string name="default_notification_channel_id">Channel ID</string>
     <string name="default_notification_channel_name" translatable="true">Test</string>
 
-
+    <string name="state_default">개폐상태</string>
     <string name="state_opened">개폐상태 (열려있음)</string>
     <string name="state_closed">걔폐상태 (닫혀있음)</string>
 
+    <string name="lock_default">잠금상태</string>
     <string name="lock_opened">잠금상태 (열려있음)</string>
     <string name="lock_closed">잠금상태 (닫혀있음)</string>
 </resources>

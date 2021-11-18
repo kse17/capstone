@@ -39,8 +39,9 @@
                     android:id="@+id/text_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="@string/state_closed" />
+                    android:text="@string/state_default" />
 
             </LinearLayout>
 
@@ -59,8 +60,9 @@
                     android:id="@+id/text_lock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="@string/lock_closed" />
+                    android:text="@string/lock_default" />
 
             </LinearLayout>
 

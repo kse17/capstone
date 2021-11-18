@@ -7,7 +7,7 @@
     tools:context=".main.ui.group.GroupFragment">
 
     <ListView
-        android:id="@+id/list_my"
+        android:id="@+id/list_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

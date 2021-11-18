@@ -150,7 +150,8 @@ public class ConnectedList extends AppCompatActivity {
                     method.invoke(device, (Object[]) null);
                     selectDevice = position;
 
-                    registerCarrier(device);
+                    //registerCarrier(device);
+                    writeNewCarrier(user, device);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -336,7 +337,7 @@ public class ConnectedList extends AppCompatActivity {
         // CarrierDTO 입력한 정보 저장
         CarrierDTO carrierDTO = new CarrierDTO(device.getAddress(), device.getName(), user.getUid(),"0","0",0,0);
         CarrierControlDTO carrierControlDTO = new CarrierControlDTO("0", "0", "0");
-        CarrierSettingDTO carrierSettingDTO = new CarrierSettingDTO("0","0","0");
+        CarrierSettingDTO carrierSettingDTO = new CarrierSettingDTO("1","1","1");
         CarrierOperationDTO carrierOperationDTO = new CarrierOperationDTO("0","0", "0");
 
         // DB에 캐리어 정보 저장
@@ -345,11 +346,11 @@ public class ConnectedList extends AppCompatActivity {
         table_carrier.child(device.getAddress()).child("carrierOperation").setValue(carrierOperationDTO);
         table_carrier.child(device.getAddress()).child("carrierControl").setValue(carrierControlDTO);
 
-        // 그룹 테스트
-        // 트랜잭션 이용해야되나?
-        // https://forest71.tistory.com/177?category=673494 참고
+        // DB에 그룹 정보 저장
+        table_carrierUsers.child(device.getAddress()).child(user.getUid()).setValue(true);
+        table_userCarriers.child(user.getUid()).child(device.getAddress()).setValue(true);
 
-        Toast.makeText(getApplicationContext(),"Carrier registration is complete: " + carrierDTO.toString(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Carrier registration is complete: " + carrierDTO.toString(),Toast.LENGTH_SHORT).show();
 
     }
 

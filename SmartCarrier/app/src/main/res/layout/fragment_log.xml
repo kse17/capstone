@@ -7,17 +7,9 @@
     android:orientation="vertical"
     tools:context=".main.ui.log.LogFragment">
 
-    <Button
-        android:id="@+id/btn_log_route"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_log_route" />
-
     <ListView
         android:id="@+id/list_my"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
 
 </LinearLayout>

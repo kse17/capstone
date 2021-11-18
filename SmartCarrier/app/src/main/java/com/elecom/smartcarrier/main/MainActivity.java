@@ -22,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.elecom.smartcarrier.R;
 import com.elecom.smartcarrier.common.ActivityHandler;
 import com.elecom.smartcarrier.common.DefineValue;
+import com.elecom.smartcarrier.common.PreferenceManager;
 import com.elecom.smartcarrier.dto.UserDTO;
 import com.elecom.smartcarrier.dto.UserSettingDTO;
 import com.elecom.smartcarrier.init.InitStepHandler;
@@ -44,6 +45,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.elecom.smartcarrier.common.PreferenceManager.getStringPreference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Successfully signed in.");
                     Toast.makeText(this,"Successfully signed in.",Toast.LENGTH_SHORT).show();
                     user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    PreferenceManager.setStringPreference(this, DefineValue.PREFERENCE_DEFAULT_USER, user.getUid());
+                    PreferenceManager.setStringPreference(this, DefineValue.PREFERENCE_DEFAULT_CARRIER, "default_carrier");
+                    Toast.makeText(this,getStringPreference(this, DefineValue.PREFERENCE_DEFAULT_USER, "default_user"),Toast.LENGTH_SHORT).show();
 
                     signUp();
                 } else {
@@ -262,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void writeNewUser(FirebaseUser user){
         // UserDTO 입력한 정보 저장
-        UserDTO userDTO = new UserDTO(user.getEmail(), user.getDisplayName());
+        UserDTO userDTO = new UserDTO(user.getUid(), user.getEmail(), user.getDisplayName());
         UserSettingDTO userSettingDTO = new UserSettingDTO("1", "1", "1");
 
         // DB에 유저 정보 저장

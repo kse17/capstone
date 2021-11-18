@@ -3,6 +3,7 @@ package com.elecom.smartcarrier.common;
 public class DefineValue {
     public final static String PREFERENCE_MAIN_INIT_STATE = "main_init_state";
     public final static String PREFERENCE_DEFAULT_CARRIER = "default_carrier";
+    public final static String PREFERENCE_DEFAULT_USER = "default_user";
     public final static String PREFERENCE_OPEN_STATE_VALUE = "open_state_value";
     public final static String PREFERENCE_LOCK_STATE_VALUE = "lock_state_value";
 

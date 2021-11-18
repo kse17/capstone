@@ -6,8 +6,7 @@
     android:background="@color/white"
     android:padding="8dp">
 
-    <TableRow android:layout_weight="1">
-
+    <TableRow>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,7 +16,6 @@
             android:textColor="@color/black"
             android:gravity="center_vertical"
             android:layout_weight="1"/>
-
         <TextView
             android:id="@+id/text_date"
             android:layout_width="match_parent"
@@ -26,34 +24,9 @@
             android:textColor="@color/gray"
             android:gravity="center_vertical"
             android:layout_weight="2"/>
-
     </TableRow>
 
-    <TableRow android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="@string/text_time"
-            android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/text_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/gray"
-            android:gravity="center_vertical"
-            android:layout_weight="2"/>
-
-    </TableRow>
-
-    <TableRow android:layout_weight="1">
-
+    <TableRow>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +36,6 @@
             android:textColor="@color/black"
             android:gravity="center_vertical"
             android:layout_weight="1"/>
-
         <TextView
             android:id="@+id/text_name"
             android:layout_width="match_parent"
@@ -72,6 +44,46 @@
             android:textColor="@color/gray"
             android:gravity="center_vertical"
             android:layout_weight="2"/>
-
     </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/text_email"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:gravity="center_vertical"
+            android:layout_weight="2"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/text_lock_log"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/text_lock_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:gravity="center_vertical"
+            android:layout_weight="2"/>
+    </TableRow>
+
 </TableLayout>

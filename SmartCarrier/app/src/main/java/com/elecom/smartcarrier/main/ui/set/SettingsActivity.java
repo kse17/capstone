@@ -2,6 +2,7 @@ package com.elecom.smartcarrier.main.ui.set;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -81,6 +82,8 @@ public class SettingsActivity extends AppCompatActivity {
                 // Use The Model Class To Get The Data
                 //final UserDTO userDTO = dataSnapshot.getValue(UserDTO.class);
                 final UserSettingDTO userSettingDTO = dataSnapshot.getValue(UserSettingDTO.class);
+
+                Log.d(TAG, "changed: " + dataSnapshot.getValue());
 
                 String sopen = userSettingDTO.getSopen();
                 Toast.makeText(getApplicationContext(), "Open: " + sopen, Toast.LENGTH_SHORT).show();

@@ -39,6 +39,7 @@
         <activity android:name=".main.ui.my.finger.DeleteFPActivity"/>
         <activity android:name=".main.ui.my.finger.AddFPActivity"/>
         <activity android:name=".main.ui.home.MapActivity"/>
+        <activity android:name=".main.ui.group.GroupAddActivity"/>
 
         <uses-library android:name="org.apache.http.legacy"
             android:required="false"/>

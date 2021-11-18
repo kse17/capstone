@@ -200,9 +200,10 @@ def start():
     bl.make_discoverable()
     bl.make_agent()
     bl.make_default_agent()
+    bl.start_scan()
     print("Scanning for 10 seconds...")
     for i in range(0, 10):
         print(i)
         time.sleep(1)
     time.sleep(30)
-
+    return True

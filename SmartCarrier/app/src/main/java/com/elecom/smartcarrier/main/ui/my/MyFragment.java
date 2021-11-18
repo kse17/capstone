@@ -30,8 +30,13 @@ import androidx.fragment.app.Fragment;
 import com.elecom.smartcarrier.R;
 import com.elecom.smartcarrier.common.DefineValue;
 import com.elecom.smartcarrier.common.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -40,16 +45,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.elecom.smartcarrier.common.DefineValue.PREFERENCE_DEFAULT_CARRIER;
+import static com.elecom.smartcarrier.common.DefineValue.PREFERENCE_DEFAULT_USER;
 import static com.elecom.smartcarrier.common.DefineValue.REQ_BLUETOOTH;
 import static com.elecom.smartcarrier.common.PreferenceManager.getStringPreference;
 
 public class MyFragment extends Fragment {
+
+    private static final String TAG = "MyFragment";
 
     private Context context;
     //ArrayList<MyData> myDataList = new ArrayList<MyData>();
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final DatabaseReference table_carrier = firebaseDatabase.getReference("carriers");
+    final DatabaseReference table_user = firebaseDatabase.getReference("users");
+    final DatabaseReference table_carrierUsers = firebaseDatabase.getReference("carrierUsers");
+    final DatabaseReference table_userCarriers = firebaseDatabase.getReference("userCarriers");
+
 
     //BluetoothAdapter
     BluetoothAdapter mBluetoothAdapter;
@@ -61,6 +74,7 @@ public class MyFragment extends Fragment {
     List<BluetoothDevice> pairedDevices;
     List<Map<String, String>> dataPaired;
     List<Map<String, String>> dataDevice;
+    List<Map<String, String>> carrierList;
 
     SimpleAdapter adapterPaired;
     SimpleAdapter adapterDevice;
@@ -79,13 +93,7 @@ public class MyFragment extends Fragment {
         ListView listMy = (ListView) root.findViewById(R.id.list_my);
         // ListView 를 Context 메뉴로 등록
         registerForContextMenu(listMy);
-        // ListView 의 아이템 하나가 클릭되는 것을 감지하는 Listener 객체
-        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
 
         //검색된 블루투스 디바이스 데이터
         bluetoothDevices = new ArrayList<>();
@@ -97,7 +105,8 @@ public class MyFragment extends Fragment {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         dataPaired = new ArrayList<>();
-        adapterPaired = new SimpleAdapter(getActivity(), dataPaired, android.R.layout.simple_list_item_2, new String[]{"cname", "mac"}, new int[]{android.R.id.text1, android.R.id.text2});
+        carrierList = new ArrayList<>();
+        adapterPaired = new SimpleAdapter(getActivity(), carrierList, android.R.layout.simple_list_item_2, new String[]{"cname", "mac"}, new int[]{android.R.id.text1, android.R.id.text2});
         //    페어링된 리스트 주석처리 ***
         listMy.setAdapter(adapterPaired);
 
@@ -119,23 +128,8 @@ public class MyFragment extends Fragment {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, REQ_BLUETOOTH);
         } else {
-            GetListPairedDevice();
+            getListCarrier();
         }
-
-        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BluetoothDevice device = pairedDevices.get(position);
-                try {
-                    //선택한 디바이스 페어링 요청
-                    Method method = device.getClass().getMethod("createBond", (Class[]) null);
-                    method.invoke(device, (Object[]) null);
-                    selectDevice = position;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         // ADD 화면 전환
         Button btnAdd = (Button) root.findViewById(R.id.btn_add);
@@ -157,7 +151,6 @@ public class MyFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.context_my, menu);
-        // title, content 바꿔야됨
     }
 
     // Context 메뉴로 등록한 View가 클릭되었을 때 자동으로 호출되는 메소드
@@ -168,14 +161,14 @@ public class MyFragment extends Fragment {
 
         switch (item.getItemId()){
             case R.id.menu_default:
-                PreferenceManager.setStringPreference(context, DefineValue.PREFERENCE_DEFAULT_CARRIER, pairedDevices.get(index).getAddress());
-                Toast.makeText(context,getStringPreference(context, DefineValue.PREFERENCE_DEFAULT_CARRIER, "default"),Toast.LENGTH_SHORT).show();
+                PreferenceManager.setStringPreference(context, DefineValue.PREFERENCE_DEFAULT_CARRIER, carrierList.get(index).get("mac"));
+                Toast.makeText(context,getStringPreference(context, DefineValue.PREFERENCE_DEFAULT_CARRIER, "default_carrier"),Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_set:
-                Toast.makeText(context,"Carrier Set: " + pairedDevices.get(index).getAddress(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Carrier Set: " + carrierList.get(index).get("mac"),Toast.LENGTH_SHORT).show();
                 //Toast.makeText(context,pairedDevices.get(index) + "Carrier Set",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), MySetActivity.class);
-                intent.putExtra("mac", pairedDevices.get(index).getAddress());
+                intent.putExtra("mac", carrierList.get(index).get("mac"));
                 startActivity(intent);
                 return true;
             default:
@@ -204,25 +197,56 @@ public class MyFragment extends Fragment {
     }
 
 
-    public void GetListPairedDevice() {
-        Set<BluetoothDevice> pairedDevice = mBluetoothAdapter.getBondedDevices();
+    public void getListCarrier() {
 
-        dataPaired.clear();
-        if (pairedDevice.size() > 0) {
+        carrierList.clear();
+        table_userCarriers.child(PreferenceManager.getStringPreference(getContext(), PREFERENCE_DEFAULT_USER, "default_user"))
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot carrierSnapshot : snapshot.getChildren()) {
+                            Toast.makeText(context, carrierSnapshot.getKey(), Toast.LENGTH_SHORT).show();
 
-            Log.v("태그", "aa");
-            for (BluetoothDevice device : pairedDevice) {
-                //데이터 저장
-                Map map = new HashMap();
-                map.put("cname", device.getName()); //device.getName() : 블루투스 디바이스의 이름
-                map.put("mac", device.getAddress()); //device.getAddress() : 블루투스 디바이스의 MAC 주소
-                pairedDevices.add(device);
-                dataPaired.add(map);
-                Log.v("태그", "aa");
-            }
-        }
-        //리스트 목록갱신
-        adapterPaired.notifyDataSetChanged();
+                            // 데이터 저장
+                            Map<String, String> map = new HashMap();
+
+                            table_carrier.child(carrierSnapshot.getKey()).child("cname").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e(TAG, "Error getting data", task.getException());
+                                    } else {
+                                        Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                                        map.put("cname", String.valueOf(task.getResult().getValue()));
+                                    }
+                                }
+                            });
+
+                            table_carrier.child(carrierSnapshot.getKey()).child("mac").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e(TAG, "Error getting data", task.getException());
+                                    } else {
+                                        Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                                        map.put("mac", String.valueOf(task.getResult().getValue()));
+
+                                        carrierList.add(map);
+
+                                        // 리스트 목록갱신
+                                        adapterPaired.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+                });
     }
 
     @Override
@@ -232,7 +256,7 @@ public class MyFragment extends Fragment {
             case REQ_BLUETOOTH:
                 //블루투스 활성화 승인
                 if (resultCode == Activity.RESULT_OK) {
-                    GetListPairedDevice();
+                    getListCarrier();
                 }
                 //블루투스 활성화 거절
                 else {
